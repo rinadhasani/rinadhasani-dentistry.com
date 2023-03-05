@@ -1,0 +1,120 @@
+<html>
+<head>
+    <title>Contact Us</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"
+            integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+
+        .column {
+            float: left;
+            width: 80%;
+            padding: 5px
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="http://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+
+    <meta name="viewport" content=" width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+
+</head>
+<body class="contact-us-page">
+<div class="flex-center">
+    <a class="button button1" href="index.html"> Home Page </a>
+    <a class="button button1" href="Orthodontics.html"> Orthodontics </a>
+    <a class="button button1" href="pediatricdentistry.html"> Pediatric Dentistry </a>
+    <a class="button button1" href="periodontist.html"> Periodontist </a>
+    <a class="button button1" href="surgery.html"> Dental & Maxillofacial Surgery </a>
+    <a class="button button1" href="prosthodontics.html"> prosthodontics </a>
+    <a class="button button1" href="contactus.html"> Contact Us </a>
+</div>
+
+<div class=" OMG" align="left ">
+    <div class="container">
+        <div class="title"> Contact Us</div>
+        <form  onsubmit='sendEmail(event)'>
+            <div class="user details">
+                <div class="input-box ">
+                    <span class="details"> First Name </span>
+                    <input type="text" id="name" placeholder="First Name" size="30px" required>
+                    <span class="details"> Last Name </span>
+                    <input type="text" placeholder="Last Name" size="30px" required>
+                </div>
+
+                <div class="input-box ">
+                    <span class="details"> Email </span>
+                    <input type="text" id="email" placeholder="Enter Your Email" size="46px" required>
+                </div>
+
+                <div class="input-box ">
+                    <span class="details"> Phone Number </span>
+                    <input type="text" placeholder="Enter Your Number" size="35px" required>
+                </div>
+
+                <div class="input-box ">
+                    <span class="details"> Subject </span>
+                    <input type="text" placeholder="The Subject" size="44px" required>
+                </div>
+                <div>
+                    <span class="details"> Your Message </span>
+                    <textarea class="field" placeholder="Enter Your Message" size="40px"> </textarea>
+                </div>
+            </div>
+
+            <div>
+                <button class="button-contact" type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    function sendEmail(event) {
+        event.preventDefault();
+        var name=document.getElementById('name').value;
+        var email=document.getElementById('email').value;
+
+        const apiKey = 'key-8318dbc5d501bdd3ff5f38df022b870d';
+        const emailEndpoint = 'https://api.mailgun.net/v3/mg2.exceptionsoft.com/messages';
+
+        const data = new FormData();
+        data.append('from', 'Project <Project@sandboxfc214d01cd7d4240b92145e85ab55c82.mailgun.org>');
+        data.append('to', name+' <'+email+'>');
+        data.append('bcc', 'rinadhasani@yahoo.com');
+       data.append('subject', 'Hello '+name);
+        data.append('template', 'thanks');
+        data.append('h:X-Mailgun-Variables', '{"firstname": "'+name+'"}');
+
+        axios.post(emailEndpoint, data, {
+            auth: {
+                username: 'api',
+                password: apiKey
+            },
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            });
+    }
+</script>
+</body>
